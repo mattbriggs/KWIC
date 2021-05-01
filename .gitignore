@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#KWIC ignore
+config.json
+/entity_extractor_legacy
