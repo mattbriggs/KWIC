@@ -8,7 +8,7 @@
 '''
 
 import cmd
-import common_utilities as DR
+import common_utilities as  CU
 import terms as TM
 
 APPVERSION = "Base CLI Version 0.0.1.20190418\n"

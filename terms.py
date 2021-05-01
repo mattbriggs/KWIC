@@ -15,7 +15,7 @@ import nltk
 import pandas as pd
 from prettytable import PrettyTable
 
-import common_utilities as DR
+import common_utilities as  CU
 import stoplist as SP
 
 

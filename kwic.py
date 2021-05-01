@@ -5,7 +5,7 @@
 
 import csv
 import json
-import common_utilities as DR
+import common_utilities as  CU
 
 
 def main():
@@ -24,7 +24,7 @@ def main():
         wordlist.append(i[3])
     worduniques = set(wordlist)
     repo_lines = [["URL", "lineno", "line"]]
-    files = DR.get_files(path_in)
+    files =  CU.get_files(path_in)
     for f in files:
         with open(f, "rt") as parsefile:
             try:
@@ -40,7 +40,7 @@ def main():
             if w.lower() in l[2].lower():
                 kwic.append([w, l[0], l[1], l[2]])
     reportname = path_out + "kwic_new.csv"
-    DR.write_csv(kwic,reportname)
+     CU.write_csv(kwic,reportname)
     print("Completed processing.")
 
 

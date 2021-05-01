@@ -1,9 +1,9 @@
 '''Test for Function'''
 
 import function as FU
-import common_utilities as DR
+import common_utilities as  CU
 
-INPUTFILE = DR.get_text_from_file("testdata\\dummy-text.md")
+INPUTFILE =  CU.get_text_from_file("testdata\\dummy-text.md")
 
 def test_method():
     '''Function x.'''

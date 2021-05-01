@@ -10,7 +10,7 @@ import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-import common_utilities as DR
+import common_utilities as  CU
 
 def get_sentiment(instring):
     '''Take in a natural langauge string and return a sentiment dictionary with the
@@ -44,7 +44,7 @@ def main():
             sent.append([kwic[indx][0], kwic[indx][1], kwic[indx][2], kwic[indx][3],
                         sent_dict["neg"], sent_dict["neu"], sent_dict["pos"], sent_dict["compound"]])
     reportname = path_out + "sentiment_new.csv"
-    DR.write_csv(sent, reportname)
+     CU.write_csv(sent, reportname)
     print("Completed processing.")
 
 

@@ -43,31 +43,13 @@ def write_csv(outbody, path):
 
 
 def output_table(indict):
-    '''With the dict provided by the SEO rank, print a list for pretty print'''
+    '''With the dict provided by the term rank, print a list for pretty print'''
     x = PrettyTable()
     x.field_names = ["Count"]
     for i in indict.keys():
         x.add_row([str(indict[i])])
     x.align["Count"] = "l"
     print(x)
-
-def make_path_url(instring):
-    '''Take a filepath and turns into a url for the docs repo.
-    C:\Git\MS\azure-stack-docs-pr\azure-stack\operator\azure-stack-add-vm-image.md
-    https://docs.microsoft.com/en-us/azure-stack/operator/azure-stack-add-vm-image
-    
-    orginal stem: "https://docs.microsoft.com/en-us/azure/{}'''
-
-    stem = instring.split("\\")[-1].split(".")[0].replace("\\", "/")
-    folder = instring.split("\\")[-2]
-    return "https://docs.microsoft.com/en-us/azure-stack/{}/{}".format(folder, stem)
-
-def make_path_url_azure_repo(instring):
-    '''Take a filepath and turns into a url for the docs repo.'''
-    start_index = instring.find("articles") + 9
-    extension = instring.split(".")
-    stem = extension[0][start_index:].replace("\\", "/")
-    return "https://docs.microsoft.com/en-us/azure/{}".format(stem)
 
 
 def get_files(inpath):

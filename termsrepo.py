@@ -7,7 +7,7 @@
 '''
 
 import json
-import common_utilities as DR
+import common_utilities as  CU
 import terms as TM
 
 ONPAGE_TABLE = [["file", "date", "score", "keyword" ]]
@@ -20,7 +20,7 @@ def add_ranks_table(indict):
     for k in indict.keys():
         record = []
         record.append(indict[k]["file"])
-        record.append(DR.THISDATE)
+        record.append( CU.THISDATE)
         record.append(indict[k]["score rank"])
         record.append(indict[k]["keyword"])
         ONPAGE_TABLE.append(record)
@@ -35,7 +35,7 @@ def main():
     config = json.loads(config_str)
     path_in = config["repoinput"]
     path_out = config["reportoutput"]
-    filelist = DR.get_files(path_in)
+    filelist =  CU.get_files(path_in)
     for f in filelist:
         try:
             print("Processing: {}".format(f))
@@ -44,7 +44,7 @@ def main():
         except Exception as e:
             print("A problem with: {} : {}".format(f, e))
     reportname = path_out + "entity_extraction.csv"
-    DR.write_csv(ONPAGE_TABLE,reportname)
+     CU.write_csv(ONPAGE_TABLE,reportname)
     print("Completed processing.")
 
 if __name__ == "__main__":
