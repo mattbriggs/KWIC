@@ -1,21 +1,23 @@
 ''' Extract terms from a document.
 
-    This script will parse a markdown document. It will extract noun 
+    This script will parse a markdown document. It will extract noun
     entities with more than one word from each markdown topic.
 
-    1. call `get_top_ten(inpath)`
-    2. output a dictionary of the top ten keywords.
+    1. Call `get_top_fifty(inpath, False)`
+    2. Output will output a dict object with the following attributes:
+    - Count. Number of words in the topic.
+    - Keyword: the keyword entity. Default is to find 2 or more word phrases.
+    - Page: filepath to the file.
 
-    Matt Briggs V1.2: 4.14.2019
+    Note: stoplist.py contains a list of strings to remove from the parse.
+
+    Matt Briggs V1.3: 5.25.2021
 '''
 
-import os
-import datetime
 import nltk
 import pandas as pd
 from prettytable import PrettyTable
 
-import common_utilities as  CU
 import stoplist as SP
 
 
@@ -41,7 +43,8 @@ def get_text_from_file(path):
 
 
 def clean_keyword(inlist):
-    glyphs = '[]|<>*=@_+Â'
+    '''With a list of characters strips them from the text.'''
+    glyphs = '[]|<>*=@_+Â/~'
     outlist = []
     for i in inlist:
         for char in glyphs:
@@ -59,34 +62,15 @@ def remove_blank(inlist):
             noblank.append(x)
     return noblank
 
+
 def apply_stoplist(inlist):
-    '''Iterate over the list to remove stop items.'''
+    '''Iterate over the list to remove stop items from the stoplist.py'''
     stoplist = SP.stoplist.split("\n")
     outlist = []
     for i in inlist:
         if i not in stoplist:
             outlist.append(i)
     return outlist
-
-
-def clear_dissallows(instring):
-    '''Apply disallow list as strings to remove.'''
-    dissallows = SP.stoplist.split("\n")
-    outstring = instring
-    for i in dissallows:
-        outstring = outstring.replace("i", " ")
-    return outstring
-
-
-def print_dict_rank(indict):
-    '''With the dict provided by the SEO rank, print a list for pretty print'''
-    x = PrettyTable()
-    print("Keyword scores for + {}\n".format(indict[1]["page"]))
-    x.field_names = ["Rank", "Keyword"]
-    for i in indict.keys():
-        x.add_row([indict[i]["score rank"], indict[i]["keyword"]])
-    x.align["Keyword"] = "l"
-    print(x)
 
 
 # Parser Functions using NLTK
@@ -116,8 +100,9 @@ def parse_sentences(incorpus):
     sentences = nltk.sent_tokenize(incorpus)
     return sentences
 
+
 def only_word_pairs(inlist):
-    '''Takes an list with strings and removes single items.'''
+    '''Takes a list with strings and removes single items.'''
     outlist = []
     for i in inlist:
         j = i.split()
@@ -136,8 +121,14 @@ def remove_blank(inlist):
     return noblank
 
 
-def extract_entities(bodytext):
-    '''Take a multisentence text and return a list of unique entities.'''
+
+
+def extract_entities(bodytext, single=False):
+    '''Take a multisentence text and return a list of unique entities.
+    Can set a value 'single' to collect single entities as well.'''
+    remove_list = SP.stoplist.split("\n")
+    for i in remove_list:
+        bodytext = bodytext.replace(i, "")
     breakdown = parse_sentences(bodytext)
     entities = []
     for sent in breakdown:
@@ -146,52 +137,42 @@ def extract_entities(bodytext):
     step1_entities = clean_keyword(entities)
     step2_entities = remove_blank(step1_entities)
     step3_entities = set(step2_entities) # remove duplicates
-    #step4_entities = only_word_pairs(list(step3_entities))
-    #step5_entities = apply_stoplist(step3_entities )
-    return step3_entities 
+    if single:
+        step4_entities = step3_entities
+    else:
+        step4_entities = only_word_pairs(list(step3_entities))
+    return step4_entities
 
 
-def filter_text(instring):
-    '''Get a raw string and return a prepped string for entity extraction.'''
-    prep = instring.replace("\n", " ").lower()
-    stoplist = SP.stoplist.lower()
-    stoplist = stoplist.split("\n")
-    stopset = set(stoplist)
-    list_filtered = list(filter(lambda x: x not in stopset, prep.split()))
-    filtered = ""
-    for i in list_filtered:
-        filtered += i + " "
-    return filtered.strip()
-
-
-def get_top_files(path, term_count=50):
-    '''With a path name to a markdown file return the indicated top terms ranked keywords in the file as a dictionary.'''
+def get_top_fifty(path, single=False):
+    '''With a path name to a markdown file return the top 10 SEO ranked
+    keywords in the file as a dictionary.'''
     try:
         bodytext = get_text_from_file(path)
-        prep_text = filter_text(bodytext)
-        record_terms = extract_entities(prep_text)
-        pagedata = {"Count" : [], "Keyword" : [], "File" : []}
+        record_terms = extract_entities(bodytext, single)
+        pagedata = {"count" : [], "keyword" : [], "page" : []}
         for term in record_terms:
-            pagedata["Count"].append(prep_text.count(term))
-            pagedata["Keyword"].append(term)
-            pagedata["File"].append(path)
-        Term_df_full = pd.DataFrame(pagedata).sort_values(by=["Count"], ascending=False).reset_index()
-        Term_summary = Term_df_full.loc[0:term_count].to_dict()
-        Term_out = {}
+            pagedata["count"].append(bodytext.count(term))
+            pagedata["keyword"].append(term)
+            pagedata["page"].append(path)
+        term_df_full = pd.DataFrame(pagedata).sort_values(by=["count"], ascending=False).reset_index()
+        term_summary = term_df_full.loc[0:50].to_dict()
+        term_out = {}
         count = 0
-        for i in Term_summary['index']:
+        for i in term_summary['index']:
             count += 1
             record = {}
             record['score rank'] = i + 1
-            record['keyword'] = Term_summary['Keyword'][i]
-            record['file'] = Term_summary['File'][i]
-            Term_out[count] = record
+            record['keyword'] = term_summary['keyword'][i]
+            record['page'] = term_summary['page'][i]
+            term_out[count] = record
     except Exception as e:
-        Term_out = {1: {"error": "Unable to process file.", "message": str(e)}}
-    return Term_out
+        term_out = {1: {"error": "Unable to process file.", "message": str(e)}}
+    return term_out
 
 
 def main():
+    '''This will run if this script attempt to run.'''
     print("This is the script that contains the functional logic.")
 
 if __name__ == "__main__":

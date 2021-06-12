@@ -133,3 +133,4 @@ dmypy.json
 #KWIC ignore
 config.json
 /entity_extractor_legacy
+.vscode

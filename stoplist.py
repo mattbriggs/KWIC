@@ -19,367 +19,68 @@ stoplist = '''
 18
 19
 20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-authoring%!%&%!%publishing%!%experience
-guides%!%&%!%onboarding
-communications
-data%!%insights
-general%!%feedback
-support%!%experience
-ID:
-**Category**:
-**LIKES**:
-**PAIN-POINTS**:
-**NEUTRAL**:
-**RESOLUTIONS**:
-**OTHER**:
-NA
+~~~ OPS
+..
+.. ..
+ID
+Start time
+Completion time
+Email
+Name
+**Which of these options most closely describes your role in content development and contribution?**
+**Why are you involved in creating and publishing content? Select all that apply.**
+**What prevents you from helping to create and publish more content? Select all that apply.**
+**What would motivate you to contribute more content or to be a more active SME or technical reviewer? Select all that apply.**
+**Which part of docs.microsoft.com is most relevant to your work**
+**What area(s) of business do you support or are you a part of? Select all that apply.**
+**If you selected multiple answers in the preceding question, which is the primary area of business for your work? Choose the best answer.**
+**How would you rate your overall satisfaction with your end-to-end content contribution experience with docs.microsoft.com?**
+**How would you rate your overall satisfaction with the docs.microsoft.com authoring experience?**
+**Do you have any suggestions for how we could simplify the docs.microsoft.com authoring experience?**
+**How would you rate your overall satisfaction with your experience as an SME or reviewer for docs.microsoft.com content?**
+**Do you have any suggestions for how we could simplify the SME or reviewer experience?**
+**Do you encounter Acrolinx as a part of your work?**
+**Arrange these parts of the Acrolinx score from most helpful (top) to least helpful (bottom).**
+**What do you like most about Acrolinx? Least?**
+**If you have a problem with Acrolinx, do you know where to go for help?**
+**Please rate your overall satisfaction with Acrolinx as a tool in your content contribution efforts.**
+**Which are the top 3 areas in which you’d like to see improvements to the content contributor experience? Select as many as 3 choices.**
+**Which content development reference materials or other resources have you used? Select all that apply.**
+**Please rate your overall satisfaction with resources and guidance for content development on docs.microsoft.com.**
+**Do you have anything to add about the content development reference materials or other resources for content development? Do you have any suggestions for how we could improve in this area?**
+**Have you encountered any problems or had any significant difficulties developing or publishing your docs.microsoft.com content?**
+**What was the nature of the problem?**
+**If you need support while developing content, where do you go for help? Select all that apply.**
+**How would you rate your overall satisfaction with content and/or platform-related help and support?**
+**If you could pick only one support-related enhancement that would most improve your efficiency, what would it be?**
+**Do you have any additional input about the support and help that are available for content and platform-related issues?**
+**Do you receive email communications to keep you informed about feature releases and platform changes to the docs.microsoft.com authoring environment?**
+**How would you rate your satisfaction with email communications about feature releases and platform changes to the docs.microsoft.com authoring environment?**
+**How would you rate your satisfaction with e-mail communications to keep you informed about flagship events, such as Build and Ignite, and any related content contribution deadlines or requirements?**
+**Have you participated in or watched a recording of one of the quarterly Winning Together forums?**
+**How would you rate your satisfaction with this forum for keeping you informed and sharing important information about docs.microsoft.com developments?**
+**Please share any suggestions or other feedback that you have about this forum.**
+**Do you have any suggestions for how we could improve in the area of communications to keep you better informed and call your attention to important information?**
+**How do you assess and monitor your content performance and health? Select all that apply.**
+**Please rate your satisfaction with the resources and support for monitoring content performance and health that are available for content on docs.microsoft.com?**
+**Do you have any suggestions for data we could provide or other changes that would keep you better informed about your content performance and health?**
+**Which of these options most closely describes your rolein content development and contribution?**
+**Howwould you rate your overall satisfactionwith your end-to-end content contribution experiencewith docs.microsoft.com?**
+**How would you rate your overall satisfaction withthedocs.microsoft.com authoringexperience?**
+// :0:
+// ::
+**Which of these options most closely describes your rolein content development and contribution?**:
+**Howwould you rate your overall satisfactionwith your end-to-end content contribution experiencewith docs.microsoft.com?**:
+**How would you rate your overall satisfaction withthedocs.microsoft.com authoringexperience?**: 
+**Do you have any suggestions for how we couldsimplifythe docs.microsoft.comauthoring experience?**
+**Which are the top  areas in which youd like to see improvements to the content contributor experience? Select as many as  choices.**
+**Do you have anything to add about the content development reference materials or other resources for content development? Do you have any suggestions for 
+how we couldimprovein this area?**
+**Have you encountered any problemsor had any significant difficulties developing or publishing your docs.microsoft.com content?**
+**What was the nature oftheproblem?**
+**If you need support while developing content,where do you go for help? Select all that apply.**
+**Do you have any additional input about thesupport and help that are available for content and platform-related issues?**:
+**Have you participated in or watched a recording ofone of the quarterly Winning Together forums?**
+**Please rate your satisfaction with the resources and support for monitoring 
+contentperformance andhealth that are available for content on docs.microsoft.com?**
 '''

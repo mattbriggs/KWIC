@@ -5,7 +5,7 @@
 
 import csv
 import json
-import common_utilities as  CU
+import common_utilities as CU
 
 
 def main():
@@ -40,7 +40,7 @@ def main():
             if w.lower() in l[2].lower():
                 kwic.append([w, l[0], l[1], l[2]])
     reportname = path_out + "kwic_new.csv"
-     CU.write_csv(kwic,reportname)
+    CU.write_csv(kwic,reportname)
     print("Completed processing.")
 
 

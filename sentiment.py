@@ -44,7 +44,7 @@ def main():
             sent.append([kwic[indx][0], kwic[indx][1], kwic[indx][2], kwic[indx][3],
                         sent_dict["neg"], sent_dict["neu"], sent_dict["pos"], sent_dict["compound"]])
     reportname = path_out + "sentiment_new.csv"
-     CU.write_csv(sent, reportname)
+    CU.write_csv(sent, reportname)
     print("Completed processing.")
 
 
