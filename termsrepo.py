@@ -39,7 +39,7 @@ def main():
     for f in filelist:
         try:
             print("Processing: {}".format(f))
-            term_list = TM.get_top_fifty(f, True)
+            term_list = TM.get_top_fifty(f, False)
             add_ranks_table(term_list)
         except Exception as e:
             print("A problem with: {} : {}".format(f, e))

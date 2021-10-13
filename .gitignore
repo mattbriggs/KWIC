@@ -134,3 +134,6 @@ dmypy.json
 config.json
 /entity_extractor_legacy
 .vscode
+
+graph/clone
+/graph/graph
