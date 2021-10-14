@@ -135,5 +135,6 @@ config.json
 /entity_extractor_legacy
 .vscode
 
-graph/clone
+/graph/clone
+clone/
 /graph/graph
