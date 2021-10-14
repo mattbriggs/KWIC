@@ -75,13 +75,18 @@ MERGE (a)-[r:{}]->(b)
 
 # logic
 
-get_repo("https://github.com/MicrosoftDocs/azure-stack-docs.git")
+#simulate json payload input
+config_file = open("config.json")
+config_str = config_file.read()
+config = json.loads(config_str)
+
+get_repo(config["gitrepo"])
 list_of_files = get_files(ROOTFOLDER, "md")
 
 uri = "neo4j://localhost:7687"
-driver = GraphDatabase.driver(uri, auth=("neo4j", ""))
+driver = GraphDatabase.driver(uri, auth=(config["neo_user"], config["neo_pass"]))
 
-map = "{ name: 'azure-stack-docs'}"
+map = "{ name: '"+config["docset"]+"'}"
 with driver.session() as session:
     session.write_transaction(create_node, "docset", map)
 
