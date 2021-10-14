@@ -1,11 +1,5 @@
 import mdparser as MDP
 
-def get_metadata(infile):
-    pass
-
-def get_body_by_line(infile):
-    pass
-
 infile = r"C:\git\mb\KWIC\graph\clone\azure-stack\user\azure-stack-compute-overview.md"
 
 mdparser = MDP.MDParser()
