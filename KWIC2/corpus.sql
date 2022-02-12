@@ -10,6 +10,7 @@ CREATE TABLE document (
     nowords INTEGER,
     summary TEXT,
     wordbag TEXT,
+    centrality REAL,
     FOREIGN KEY (corpusid)
         REFERENCES corpus (corpusid)
 );
