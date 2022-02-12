@@ -1,0 +1,45 @@
+Table "corpus" {
+  "corpusid" INTEGER [pk]
+  "nowords" INTEGER
+  "docount" INTEGER
+}
+
+Table "document" {
+  "documentid" INTEGER [pk]
+  "corpusid" INTEGER
+  "filepath" text
+  "nowords" INTEGER
+  "summary" text
+  "bagofwords" text
+}
+
+Table "textline" {
+  "lineid" INTEGER [pk]
+  "documentid" INTEGER [not null]
+  "lineno" INTEGER
+  "linetext" text
+  "possent" REAL
+  "nuesent" REAL
+  "negsent" REAL
+  "compsent" REAL
+}
+
+Table "entity" {
+  "entityid" INTEGER [pk]
+  "entityname" text [unique, not null]
+  "variants" text
+}
+
+Table "context" {
+  "contextid" INTEGER [pk]
+  "entityid" NOT
+  "lineid" NOT
+}
+
+Ref:"corpus"."corpusid" < "document"."corpusid"
+
+Ref:"document"."documentid" < "textline"."documentid"
+
+Ref:"entity"."entityid" < "context"."entityid"
+
+Ref:"textline"."lineid" < "context"."lineid"
