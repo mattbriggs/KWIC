@@ -1,23 +1,23 @@
 Table "corpus" {
-  "corpusid" INTEGER [pk]
+  "corpusid" TEXT [pk]
   "nowords" INTEGER
   "docount" INTEGER
 }
 
 Table "document" {
-  "documentid" INTEGER [pk]
-  "corpusid" INTEGER
-  "filepath" text
+  "documentid" TEXT [pk]
+  "corpusid" TEXT
+  "filepath" TEXT
   "nowords" INTEGER
-  "summary" text
-  "bagofwords" text
+  "summary" TEXT
+  "wordbag" TEXT
 }
 
 Table "textline" {
-  "lineid" INTEGER [pk]
-  "documentid" INTEGER [not null]
+  "lineid" TEXT [pk]
+  "documentid" TEXT [not null]
   "lineno" INTEGER
-  "linetext" text
+  "linetext" TEXT
   "possent" REAL
   "nuesent" REAL
   "negsent" REAL
@@ -25,21 +25,35 @@ Table "textline" {
 }
 
 Table "entity" {
-  "entityid" INTEGER [pk]
-  "entityname" text [unique, not null]
-  "variants" text
+  "entityname" TEXT [pk, not null]
+  "variants" TEXT
 }
 
 Table "context" {
-  "contextid" INTEGER [pk]
-  "entityid" NOT
-  "lineid" NOT
+  "contextid" TEXT [pk]
+  "entityname" TEXT [not null]
+  "lineid" TEXT [not null]
+}
+
+Table "similarity" {
+  "simmilarityid" TEXT [unique]
+  "similitary" REAL
+  "sourceid" TEXT
+  "targetid" TEXT
+
+Indexes {
+  (sourceid, targetid) [pk]
+}
 }
 
 Ref:"corpus"."corpusid" < "document"."corpusid"
 
 Ref:"document"."documentid" < "textline"."documentid"
 
-Ref:"entity"."entityid" < "context"."entityid"
+Ref:"entity"."entityname" < "context"."entityname"
 
 Ref:"textline"."lineid" < "context"."lineid"
+
+Ref:"document"."documentid" < "similarity"."sourceid"
+
+Ref:"document"."documentid" < "similarity"."targetid"

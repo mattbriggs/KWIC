@@ -38,14 +38,14 @@ Create TABLE context (
     FOREIGN KEY (lineid)
         REFERENCES textline (lineid)
 );
-Create TABLE similiarity (
+Create TABLE similarity (
     simmilarityid TEXT UNIQUE,
     similitary REAL,
     sourceid TEXT,
     targetid TEXT,
-    PRIMARY KEY (sourceid, targetid)
+    PRIMARY KEY (sourceid, targetid),
     FOREIGN KEY (sourceid)
         REFERENCES document (documentid),
-    FOREIGN KEY (sourceid)
+    FOREIGN KEY (targetid)
         REFERENCES document (documentid)
 );
