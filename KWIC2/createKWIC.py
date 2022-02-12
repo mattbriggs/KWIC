@@ -10,12 +10,18 @@ import loaddatabase as LD
 databasefolder = "C:\\data\\20220210corpus"
 corpustoassess = r"C:\git\ms\azure-stack-docs-pr\azure-stack\aks-hci"
 
-print("Start")
+print("Start in collecting KWIC.")
 
 corpusmodel = CD.CorpusModel()
 databasepath = corpusmodel.create(databasefolder)
 parsecorpus = LD.parseCorpus()
-finish = parsecorpus.parse(corpustoassess, databasepath)
-print(finish)
+loaddocs = parsecorpus.parse(corpustoassess, databasepath)
+print(loaddocs)
+loadcontext = LD.loadContext()
+loadcon = loadcontext.find_matching_lines(databasepath)
+# print(loadcon)
+getsim = LD.getSimilarity()
+loadsim = getsim.get_similarity(databasepath)
+print(loadsim)
 
-print("End")
+print("Completed collecting KWIC.")

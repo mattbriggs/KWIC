@@ -34,3 +34,8 @@ class CorpusModel():
 
         else:
             raise TypeError("Use a path to the directory.")
+
+
+databasefolder = "C:\\data\\20220210corpus"
+corpusmodel = CorpusModel()
+databasepath = corpusmodel.create(databasefolder)

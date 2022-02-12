@@ -31,18 +31,19 @@ CREATE TABLE entity (
 );
 Create TABLE context (
     contextid TEXT PRIMARY KEY,
-    entityid TEXT NOT NULL,
+    entityname TEXT NOT NULL,
     lineid TEXT NOT NULL,
-    FOREIGN KEY (entityid)
-        REFERENCES entity (entityid),
+    FOREIGN KEY (entityname)
+        REFERENCES entity (entityname),
     FOREIGN KEY (lineid)
         REFERENCES textline (lineid)
 );
-Create TABLE similiaty (
-    simmilarityid INTEGER PRIMARY KEY,
+Create TABLE similiarity (
+    simmilarityid TEXT UNIQUE,
     similitary REAL,
     sourceid TEXT,
     targetid TEXT,
+    PRIMARY KEY (sourceid, targetid)
     FOREIGN KEY (sourceid)
         REFERENCES document (documentid),
     FOREIGN KEY (sourceid)
