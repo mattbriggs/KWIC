@@ -17,7 +17,6 @@ class CorpusModel():
 
         if os.path.isdir(inpath):
             fullpath = inpath + "\\corpusdata.db"
-            print(fullpath)
             try:
                 sqliteConnection = sqlite3.connect(fullpath)
                 cursor = sqliteConnection.cursor()
@@ -30,10 +29,8 @@ class CorpusModel():
                 cursor.close()
 
             except sqlite3.Error as error:
-                print("Error while executing sqlite script", error) 
+                print("Error while executing sqlite script", error)
+            return fullpath
 
         else:
             raise TypeError("Use a path to the directory.")
-
-makemodel = CorpusModel()
-makemodel.create("C:\\data\\20220210corpus")

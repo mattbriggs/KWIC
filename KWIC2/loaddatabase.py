@@ -3,10 +3,9 @@ Load the relational database with the corpus.
 v.1.0.0 2022.2.10
 '''
 
-from lib2to3.pgen2.token import VBAR
-import string
 import summarize as SU
 import common_utilities as CU
+import sentiment as SE
 import terms as TM
 import sqlite3
 import uuid
@@ -83,10 +82,11 @@ class loadDocument():
             conn.commit()
             cur.close()
         except Exception as e:
-            print("An error occurred in loadDocument. {}".format(e))
+            print("An error occurred in loadDocument/document {}".format(e))
 
 
     def load_table_entity(self, inprocessDocument, dbpath):
+        """ """
 
         entities = inprocessDocument.entities.keys()
         for i in entities:
@@ -100,5 +100,70 @@ class loadDocument():
                 conn.commit()
                 cur.close()
             except Exception as e:
-                print("An error occurred in inprocessDocument {}".format(e))
+                print("An error occurred in loadDocument/entity {}".format(e))
 
+
+    def load_table_lines(self, inprocessDocument, dbpath):
+        """ """
+        for c, i in enumerate(inprocessDocument.lines):
+            try:
+                count = c + 1
+                sent = SE.get_sentiment(i)
+                va = str(uuid.uuid4())
+                vb = inprocessDocument.docid
+                vc = count
+                vd = i
+                ve = sent["pos"]
+                vf = sent["neu"]
+                vg = sent["neg"]
+                vh = sent["compound"]
+
+                conn = sqlite3.connect(dbpath)
+                cur = conn.cursor()
+                cur.execute('INSERT INTO textline (lineid, documentid, lineno, \
+                    linetext, possent, nuesent, negsent, compsent) \
+                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )', ( va, vb, vc, \
+                    vd, ve, vf, vg, vh ) )
+                conn.commit()
+                cur.close()
+            except Exception as e:
+                print("An error occurred in loadDocument/lines {}".format(e))
+
+class parseCorpus():
+    ''' '''
+    def __init__(self):
+        self.corpusid = str(uuid.uuid4())
+        self.nowords = 0
+        self.docount = 0
+    
+    def parse(self, pathtocorpus, pathtodatabase):
+        '''With the path to the corpus, get the Keywords in context and
+        save to the a database.'''
+        files = CU.get_files(pathtocorpus)
+        for f in files:
+            print("Processing: " + f)
+            try:
+                doc = processDocument()
+                doc.parse(self.corpusid, f)
+                loaddoc = loadDocument()
+                loaddoc.load_table_document(doc, pathtodatabase)
+                loaddoc.load_table_entity(doc, pathtodatabase)
+                loaddoc.load_table_lines(doc, pathtodatabase)
+            except Exception as e:
+                print("An error occurred trying to open {} : error: {}".format(f, e))
+        
+        conn = sqlite3.connect(pathtodatabase)
+        cur = conn.cursor()
+        cur.execute('INSERT INTO corpus (corpusid, nowords, docount) \
+            VALUES ( ?, ?, ? )', ( self.corpusid, self.nowords, self.docount) )
+        conn.commit()
+        cur.close()
+        return "Done!"
+
+class parseContext():
+    ''' '''
+    def __init__(self):
+        pass
+    def find_matching_lines(pathtodatabase):
+        '''  '''
+        pass
