@@ -11,6 +11,9 @@ CREATE TABLE document (
     summary TEXT,
     wordbag TEXT,
     centrality REAL,
+    facet1 TEXT,
+    facet2 TEXT,
+    facet3 TEXT,
     FOREIGN KEY (corpusid)
         REFERENCES corpus (corpusid)
 );

@@ -3,6 +3,7 @@ Load the relational database with the corpus.
 v.1.0.0 2022.2.10
 '''
 
+from signal import valid_signals
 import summarize as SU
 import common_utilities as CU
 import sentiment as SE
@@ -10,7 +11,6 @@ import terms as TM
 import nltk.corpus
 import nltk.tokenize.punkt
 import nltk.stem.snowball
-nltk.download('popular')
 import string
 import sqlite3
 import uuid
@@ -44,6 +44,7 @@ class processDocument():
             bag.append(indict[i]["keyword"])
         bagset = set(bag)
         return bagset
+
 
     def parse(self, corpusid, filepath):
         '''With a filepath return the following elements:
@@ -79,11 +80,16 @@ class loadDocument():
             vd = pdoc.wordcount
             ve = pdoc.summary
             vf = str(pdoc.wordbag)
+            vg = pdoc.entities[1]["keyword"]
+            vh = pdoc.entities[2]["keyword"]
+            vi = pdoc.entities[3]["keyword"]
 
             conn = sqlite3.connect(dbpath)
             cur = conn.cursor()
             cur.execute('INSERT INTO document (documentid, corpusid, filepath, \
-                nowords, summary, wordbag) VALUES ( ?, ?, ?, ?, ?, ? )', ( va, vb, vc, vd, ve, vf) )
+                nowords, summary, wordbag, facet1, facet2, facet3) VALUES \
+                ( ?, ?, ?, ?, ?, ?, ?, ?, ? )', \
+                ( va, vb, vc, vd, ve, vf, vg, vh, vi ) )
             conn.commit()
             cur.close()
         except Exception as e:

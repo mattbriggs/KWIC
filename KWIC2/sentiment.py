@@ -4,8 +4,6 @@
     v.0.1 2020.10.10
 '''
 
-import csv
-import json
 import nltk
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer

@@ -14,12 +14,12 @@ class createCentralnodes():
     def __init__(self):
         pass
 
-    def load_doc_centrality(pathtodabase):
+    def load_doc_centrality(self, pathtodabase):
         '''With a list of similar documents, find the most centrally
         similar documents using a centrality score in a the similarity network.
         Update the document table.'''
 
-        conn = sqlite3.connect(pathtodatabase)
+        conn = sqlite3.connect(pathtodabase)
         cur = conn.cursor()
         edges = list(cur.execute('SELECT sourceid, targetid FROM \
             similiaty WHERE similitary > 0.33'))
@@ -36,7 +36,7 @@ class createCentralnodes():
         G.add_edges_from(edges)
 
         for i in deg_centrality.keys():
-            conn = sqlite3.connect(pathtodatabase)
+            conn = sqlite3.connect(pathtodabase)
             cur = conn.cursor()
             sqlstring = 'UPDATE document SET centrality = "{}" WHERE \
                 documentid = "{}";'.format(float(deg_centrality[i]), str(i))
