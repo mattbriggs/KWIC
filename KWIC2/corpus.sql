@@ -58,8 +58,8 @@ CREATE VIEW entity_network_view AS
     FROM textline JOIN context 
     ON textline.lineid=context.lineid;
 CREATE VIEW kwic_view AS
-	SELECT context.entityname, textline.documentid, textline.lineno, textline.linetext, textline.possent, textline.nuesent, textline.negsent, textline.compsent 
-	FROM context
-	JOIN textline
-	ON context.lineid=textline.lineid;
+    SELECT context.entityname, textline.documentid, textline.lineno, textline.linetext, textline.possent, textline.nuesent, textline.negsent, textline.compsent 
+    FROM context
+    JOIN textline
+    ON context.lineid=textline.lineid;
 
