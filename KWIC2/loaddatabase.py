@@ -101,17 +101,18 @@ class loadDocument():
 
         entities = inprocessDocument.entities.keys()
         for i in entities:
-            try:
-                va = inprocessDocument.entities[i]["keyword"]
-                vb = ""
-                conn = sqlite3.connect(dbpath)
-                cur = conn.cursor()
-                cur.execute('INSERT INTO entity (entityname, variants) \
-                    VALUES ( ?, ? )', ( va, vb ) )
-                conn.commit()
-                cur.close()
-            except Exception as e:
-                print("An error occurred in loadDocument/entity {}".format(e))
+            if len(inprocessDocument.entities[i]["keyword"]) > 1:
+                try:
+                    va = inprocessDocument.entities[i]["keyword"]
+                    vb = ""
+                    conn = sqlite3.connect(dbpath)
+                    cur = conn.cursor()
+                    cur.execute('INSERT INTO entity (entityname, variants) \
+                        VALUES ( ?, ? )', ( va, vb ) )
+                    conn.commit()
+                    cur.close()
+                except Exception as e:
+                    print("An error or attempt to duplicate occurred in loadDocument/entity {}".format(e))
 
 
     def load_table_lines(self, inprocessDocument, dbpath):
@@ -148,7 +149,7 @@ class parseCorpus():
         self.corpusid = str(uuid.uuid4())
         self.nowords = 0
         self.docount = 0
-    
+
     def parse(self, pathtocorpus, pathtodatabase):
         '''With the path to the corpus, get the Keywords in context and
         save to the a database.'''
@@ -252,15 +253,18 @@ class getSimilarity():
         for x in summaries:
             for y in summaries:
                 count += 1
-                if x[0] != y[0]:
-                    print("Similarity {} of {} left {}".format(count, size-count, size))
-                    sim = self.is_ci_token_stopword_set_match(x[1], y[1])
-                    conn = sqlite3.connect(pathtodatabase)
-                    cur = conn.cursor()
-                    cur.execute('INSERT INTO similarity (simmilarityid, \
-                        similitary, sourceid, targetid) VALUES ( ?, ?, ?, ?)', \
-                        ( str(uuid.uuid4()), sim, x[0], y[0]) )
-                    conn.commit()
-                    cur.close()
+                try:
+                    if x[0] != y[0]:
+                        print("Similarity {} of {} left {}".format(count, size-count, size))
+                        sim = self.is_ci_token_stopword_set_match(x[1], y[1])
+                        conn = sqlite3.connect(pathtodatabase)
+                        cur = conn.cursor()
+                        cur.execute('INSERT INTO similarity (simmilarityid, \
+                            similitary, sourceid, targetid) VALUES ( ?, ?, ?, ?)', \
+                            ( str(uuid.uuid4()), sim, x[0], y[0]) )
+                        conn.commit()
+                        cur.close()
+                except Exception as e:
+                    print("An error occurred in get_similarity {}".format(e))
 
         return ("Done mapping similarities.")

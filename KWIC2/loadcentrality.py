@@ -22,7 +22,7 @@ class createCentralnodes():
         conn = sqlite3.connect(pathtodabase)
         cur = conn.cursor()
         edges = list(cur.execute('SELECT sourceid, targetid FROM \
-            similiaty WHERE similitary > 0.33'))
+            similarity WHERE similarity > 0.33'))
         cur.close()
 
         nodes_a = []
