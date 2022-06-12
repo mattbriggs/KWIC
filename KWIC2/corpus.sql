@@ -31,6 +31,7 @@ CREATE TABLE textline (
 );
 CREATE TABLE entity (
     entityname TEXT NOT NULL PRIMARY KEY,
+    centrality REAL,
     variants TEXT
 );
 Create TABLE context (
@@ -62,4 +63,3 @@ CREATE VIEW kwic_view AS
     FROM context
     JOIN textline
     ON context.lineid=textline.lineid;
-

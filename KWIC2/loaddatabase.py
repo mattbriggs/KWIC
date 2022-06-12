@@ -260,7 +260,7 @@ class getSimilarity():
                         conn = sqlite3.connect(pathtodatabase)
                         cur = conn.cursor()
                         cur.execute('INSERT INTO similarity (simmilarityid, \
-                            similitary, sourceid, targetid) VALUES ( ?, ?, ?, ?)', \
+                            similarity, sourceid, targetid) VALUES ( ?, ?, ?, ?)', \
                             ( str(uuid.uuid4()), sim, x[0], y[0]) )
                         conn.commit()
                         cur.close()

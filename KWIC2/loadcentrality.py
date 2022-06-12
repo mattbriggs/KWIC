@@ -21,6 +21,39 @@ class createCentralnodes():
 
         conn = sqlite3.connect(pathtodabase)
         cur = conn.cursor()
+        edges = list(cur.execute('SELECT entityname, documentid FROM entity_network_view;'))
+        cur.close()
+
+        nodes_a = []
+        for i in edges:
+            nodes_a.append(i[0])
+            nodes_a.append(i[1])
+        nodes = list(set(nodes_a))
+
+        G = nx.Graph()
+        G.add_nodes_from(nodes)
+        G.add_edges_from(edges)
+
+        deg_centrality = nx.degree_centrality(G)
+
+        for i in deg_centrality.keys():
+            conn = sqlite3.connect(pathtodabase)
+            cur = conn.cursor()
+            sqlstring = 'UPDATE document SET centrality = "{}" WHERE \
+                documentid = "{}";'.format(float(deg_centrality[i]), str(i))
+            cur.execute(sqlstring)
+            conn.commit()
+            cur.close()
+        
+        return("Added centrality for documents.")
+
+    def load_entity_centrality(self, pathtodabase):
+        '''With a list of entites, find the most centrally
+        similar documents using a centrality score in a the similarity network.
+        Update the document table.'''
+
+        conn = sqlite3.connect(pathtodabase)
+        cur = conn.cursor()
         edges = list(cur.execute('SELECT sourceid, targetid FROM \
             similarity WHERE similarity > 0.33'))
         cur.close()
@@ -35,11 +68,13 @@ class createCentralnodes():
         G.add_nodes_from(nodes)
         G.add_edges_from(edges)
 
+        deg_centrality = nx.degree_centrality(G)
+
         for i in deg_centrality.keys():
             conn = sqlite3.connect(pathtodabase)
             cur = conn.cursor()
-            sqlstring = 'UPDATE document SET centrality = "{}" WHERE \
-                documentid = "{}";'.format(float(deg_centrality[i]), str(i))
+            sqlstring = 'UPDATE entity SET centrality = "{}" WHERE \
+                entityname = "{}";'.format(float(deg_centrality[i]), str(i))
             cur.execute(sqlstring)
             conn.commit()
             cur.close()
