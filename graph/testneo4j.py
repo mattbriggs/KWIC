@@ -23,6 +23,6 @@ class HelloWorldExample:
         return result.single()[0]
 
 if __name__ == "__main__":
-    greeter = HelloWorldExample("bolt://localhost:7687", "neo4j", "reb00REB")
+    greeter = HelloWorldExample("bolt://localhost:11001", "neo4j", "neo4j")
     greeter.print_greeting("hello, world")
     greeter.close()

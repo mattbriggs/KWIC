@@ -37,6 +37,7 @@ class processDocument():
             wordcount = 1
         return wordcount
 
+
     def getwordbag(self, indict):
         bag = []
         termkeys = indict.keys()
@@ -57,15 +58,18 @@ class processDocument():
         entity is frequency, location, name
         '''
 
-        self.docid = str(uuid.uuid4())
-        self.path = filepath
-        self.raw = CU.get_text_from_file(filepath)
-        self.summary = SU.summarize_text(self.raw)
-        self.wordcount = self.getcount(self.raw)
-        self.lines = self.raw.split("\n")
-        self.entities = TM.get_top_fifty(self.raw, filepath, True)
-        self.wordbag = self.getwordbag(self.entities )
-        self.corpusid = corpusid
+        try:
+            self.docid = str(uuid.uuid4())
+            self.path = filepath
+            self.raw = CU.get_text_from_file(filepath)
+            self.summary = SU.summarize_text(self.raw)
+            self.wordcount = self.getcount(self.raw)
+            self.lines = self.raw.split("\n")
+            self.entities = TM.get_top_fifty(self.raw, filepath, True)
+            self.wordbag = self.getwordbag(self.entities )
+            self.corpusid = corpusid
+        except Exception as e:
+            print(e)
 
 class loadDocument():
     '''Class takes a processDocument object and inserts into the database.'''
@@ -73,6 +77,11 @@ class loadDocument():
         pass
     def load_table_document(self, pdoc, dbpath):
         '''Load the document table with a processDocument object.'''
+        clear_entity = []
+        for i in pdoc.entities.keys():
+            keyword = pdoc.entities[i]["keyword"]
+            if len(keyword) > 2:
+                clear_entity.append(keyword)
         try:
             va = pdoc.docid
             vb = pdoc.corpusid
@@ -80,9 +89,9 @@ class loadDocument():
             vd = pdoc.wordcount
             ve = pdoc.summary
             vf = str(pdoc.wordbag)
-            vg = pdoc.entities[1]["keyword"]
-            vh = pdoc.entities[2]["keyword"]
-            vi = pdoc.entities[3]["keyword"]
+            vg = clear_entity[0]["keyword"]
+            vh = clear_entity[1]["keyword"]
+            vi = clear_entity[2]["keyword"]
 
             conn = sqlite3.connect(dbpath)
             cur = conn.cursor()

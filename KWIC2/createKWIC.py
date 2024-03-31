@@ -1,7 +1,7 @@
 '''
-Create KWIC
-
-v. 1.0.0 2022-6-11
+    KWIC (Keyword in context)
+    Matt Briggs
+    v.1.0.0 2022-6-11
 '''
 
 import yaml
