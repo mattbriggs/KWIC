@@ -1,7 +1,3 @@
-Below is a README for the sketch module designed to create a Keyword in Context (KWIC) graph in Neo4J locally. This README outlines the purpose, setup, and execution of the script, aiming to provide clear guidance for users.
-
----
-
 # KWIC Neo4J Graph Creator
 
 ## Overview
@@ -149,15 +145,3 @@ print(html)
 ```
 
 Replace `"example.md"` with the path to your markdown file. This example demonstrates how to use the `MDParser` to extract metadata and convert the markdown body to HTML.
-
-## Contributing
-
-Contributions to this module are welcome. Please follow standard Python practices for code style and commit messages.
-
-## License
-
-Specify your license here. If not otherwise stated, it's assumed to be proprietary.
-
----
-
-Adjust paths, class, and module names as necessary to fit the actual implementation and structure of your project.
