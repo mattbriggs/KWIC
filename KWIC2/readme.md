@@ -29,6 +29,8 @@ The KWIC (Keyword in Context) application, developed by Matt Briggs and marked v
 pip install pyyaml
 ```
 
+python -m nltk.downloader all
+
 Note: If `createdatabase`, `loaddatabase`, and `loadcentrality` modules are not standard Python packages, ensure they are included in your project directory or installed accordingly.
 
 ## Configuration

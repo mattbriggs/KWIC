@@ -1,0 +1,7 @@
+
+prettytable
+PyYAML
+networkx
+matplotlib
+nltk
+pandas

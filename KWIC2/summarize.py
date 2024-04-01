@@ -15,7 +15,7 @@ import json
 import csv
 import re
 import nltk
-import heapq 
+import heapq
 
 article_text = ""
 
