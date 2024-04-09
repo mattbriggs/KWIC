@@ -62,7 +62,7 @@ Ensure to execute the provided SQL commands to set up the database schema before
 To start the KWIC application, run the main script from your terminal:
 
 ```bash
-python <path_to_script>/kwic.py
+python createKWIC.py
 ```
 
 This script will:
